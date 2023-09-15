@@ -18,33 +18,33 @@ export class ClientesService {
   }
 
   async obtenerClientePorId(id: number) {
-    const usuarioExiste = await this.clienteRepository.findOne({ where: { id } });
+    const clienteExiste = await this.clienteRepository.findOne({ where: { id } });
 
-    if (!usuarioExiste) {
-      return new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+    if (!clienteExiste) {
+      return new HttpException('Cliente no encontrado', HttpStatus.NOT_FOUND);
     }
 
-    return usuarioExiste;
+    return clienteExiste;
   }
 
   async borrarCliente(id: number) {
     const resultado = await this.clienteRepository.delete(id);
 
     if (resultado.affected === 0) {
-      return new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+      return new HttpException('Cliente no encontrado', HttpStatus.NOT_FOUND);
     }
 
     return resultado;
   }
 
   async actualizarCliente(id: number, cliente: ActualizarClienteDto) {
-    const usuarioExiste = await this.clienteRepository.findOne({ where: { id } });
+    const clienteExiste = await this.clienteRepository.findOne({ where: { id } });
 
-    if (!usuarioExiste) {
-      return new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
+    if (!clienteExiste) {
+      return new HttpException('Cliente no encontrado', HttpStatus.NOT_FOUND);
     }
 
-    const actualizarCliente = Object.assign(usuarioExiste, cliente);
+    const actualizarCliente = Object.assign(clienteExiste, cliente);
     return this.clienteRepository.save(actualizarCliente);
   }
 }
