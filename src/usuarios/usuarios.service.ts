@@ -14,41 +14,30 @@ export class UsuariosService {
   ) {}
 
   // CREAR ----------------------------------------------------------------------------
-  async create({
-    usuario,
-    correo,
-    contrasenia,
-    nombre,
-    telefono,
-  }: CrearUsuarioDto) {
+  async create(crearUsuario: CrearUsuarioDto) {
+    // Verificar si existe usuario o correo
     const buscarUsuario = await this.usuarioRepository.findOne({
-      where: { usuario },
+      where: { usuario: crearUsuario.usuario },
     });
-
     if (buscarUsuario)
-      throw new HttpException(
-        'El usuario ya existe',
-        HttpStatus.NOT_ACCEPTABLE,
-      );
+      throw new HttpException('Usuario ya existe', HttpStatus.NOT_ACCEPTABLE);
 
     const buscarCorreo = await this.usuarioRepository.findOne({
-      where: { correo },
+      where: { correo: crearUsuario.correo },
     });
     if (buscarCorreo)
-      throw new HttpException('El correo ya existe', HttpStatus.NOT_ACCEPTABLE);
+      throw new HttpException('Correo ya existe', HttpStatus.NOT_ACCEPTABLE);
 
-    const nuevoUsuario = this.usuarioRepository.create({
-      usuario,
-      correo,
-      nombre,
-      telefono,
-      contrasenia: await bcryptjs.hash(contrasenia, 10),
-    });
+    // hash contraseña
+    const { contrasenia } = crearUsuario;
+    const contraseniaHash = await bcryptjs.hash(contrasenia, 10);
+    crearUsuario.contrasenia = contraseniaHash;
 
-    const guardar = this.usuarioRepository.save(nuevoUsuario);
-    delete (await guardar).contrasenia;
-
-    return guardar;
+    // guardar
+    // const nuevoUsuario = this.usuarioRepository.create({}); // create crea una instancia
+    const usuarioGuardado = this.usuarioRepository.save(crearUsuario);
+    delete (await usuarioGuardado).contrasenia;
+    return usuarioGuardado;
   }
 
   // OBTENER TODOS -----------------------------------------------------------------------
@@ -117,6 +106,33 @@ export class UsuariosService {
     await this.usuarioRepository.save(usuario);
     return HttpStatus.OK;
   }
+
+  // CREAR ----------------------------------------------------------------------------
+  // async create({ usuario, correo, contrasenia, nombre, telefono }: CrearUsuarioDto) {
+  //   const buscarUsuario = await this.usuarioRepository.findOne({
+  //     where: { usuario },
+  //   });
+
+  //   if (buscarUsuario)
+  //     throw new HttpException( 'El usuario ya existe', HttpStatus.NOT_ACCEPTABLE );
+
+  //   const buscarCorreo = await this.usuarioRepository.findOne({ where: { correo } });
+  //   if (buscarCorreo)
+  //     throw new HttpException('El correo ya existe', HttpStatus.NOT_ACCEPTABLE);
+
+  //   const nuevoUsuario = this.usuarioRepository.create({
+  //     usuario,
+  //     correo,
+  //     nombre,
+  //     telefono,
+  //     contrasenia: await bcryptjs.hash(contrasenia, 10),
+  //   });
+
+  //   const guardar = this.usuarioRepository.save(nuevoUsuario);
+  //   delete (await guardar).contrasenia;
+
+  //   return guardar;
+  // }
 
   // // BUSCAR POR USUARIO --------------------------------------------------------------------
   // async findByUsername(usuario: string) {
