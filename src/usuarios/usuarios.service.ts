@@ -35,7 +35,7 @@ export class UsuariosService {
 
     // guardar
     // const nuevoUsuario = this.usuarioRepository.create({}); // create crea una instancia
-    const usuarioGuardado = this.usuarioRepository.save(crearUsuario);
+    const usuarioGuardado = await this.usuarioRepository.save(crearUsuario);
     //delete (await usuarioGuardado).contrasenia;
     return usuarioGuardado;
   }

@@ -1,10 +1,22 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { ActualizarProductoDto, CrearProductoDto } from './dto/producto.dto';
 import { ProductosService } from './productos.service';
 
+@UseGuards(AuthGuard)
 @Controller('productos')
 export class ProductosController {
-  constructor(private productosService: ProductosService){}
+  constructor(private productosService: ProductosService) {}
 
   @Get()
   obtenerProductos() {
@@ -27,7 +39,10 @@ export class ProductosController {
   }
 
   @Patch(':id')
-  actualizarProducto(@Param('id', ParseIntPipe) id: number, @Body() producto: ActualizarProductoDto) {
+  actualizarProducto(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() producto: ActualizarProductoDto,
+  ) {
     return this.productosService.actualizarProducto(id, producto);
   }
 }

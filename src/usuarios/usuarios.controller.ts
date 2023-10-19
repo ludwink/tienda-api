@@ -12,6 +12,8 @@ import { CrearUsuarioDto } from './dto/crear-usuario.dto';
 import { ModificarUsuarioDto } from './dto/modificar-usuario.dto';
 import { UsuariosService } from './usuarios.service';
 
+// Guard global, protege todas las rutas
+//@UseGuards(AuthGuard)
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
