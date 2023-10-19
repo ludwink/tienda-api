@@ -36,7 +36,7 @@ export class UsuariosService {
     // guardar
     // const nuevoUsuario = this.usuarioRepository.create({}); // create crea una instancia
     const usuarioGuardado = this.usuarioRepository.save(crearUsuario);
-    delete (await usuarioGuardado).contrasenia;
+    //delete (await usuarioGuardado).contrasenia;
     return usuarioGuardado;
   }
 
@@ -70,7 +70,7 @@ export class UsuariosService {
         HttpStatus.NOT_FOUND,
       );
 
-    delete resultado.contrasenia;
+    //delete resultado.contrasenia;
     return resultado;
   }
 
@@ -106,81 +106,4 @@ export class UsuariosService {
     await this.usuarioRepository.save(usuario);
     return HttpStatus.OK;
   }
-
-  // CREAR ----------------------------------------------------------------------------
-  // async create({ usuario, correo, contrasenia, nombre, telefono }: CrearUsuarioDto) {
-  //   const buscarUsuario = await this.usuarioRepository.findOne({
-  //     where: { usuario },
-  //   });
-
-  //   if (buscarUsuario)
-  //     throw new HttpException( 'El usuario ya existe', HttpStatus.NOT_ACCEPTABLE );
-
-  //   const buscarCorreo = await this.usuarioRepository.findOne({ where: { correo } });
-  //   if (buscarCorreo)
-  //     throw new HttpException('El correo ya existe', HttpStatus.NOT_ACCEPTABLE);
-
-  //   const nuevoUsuario = this.usuarioRepository.create({
-  //     usuario,
-  //     correo,
-  //     nombre,
-  //     telefono,
-  //     contrasenia: await bcryptjs.hash(contrasenia, 10),
-  //   });
-
-  //   const guardar = this.usuarioRepository.save(nuevoUsuario);
-  //   delete (await guardar).contrasenia;
-
-  //   return guardar;
-  // }
-
-  // // BUSCAR POR USUARIO --------------------------------------------------------------------
-  // async findByUsername(usuario: string) {
-  //   const resultado = await this.usuarioRepository.findOne({
-  //     where: { usuario },
-  //   });
-  //   if (!resultado)
-  //     return new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
-  //   delete resultado.contrasenia;
-  //   return resultado;
-  // }
-
-  // // BUSCAR POR CORREO ---------------------------------------------------------------------
-  // async findByEmail(correo: string) {
-  //   const resultado = await this.usuarioRepository.findOne({
-  //     where: { correo },
-  //   });
-  //   if (!resultado)
-  //     return new HttpException('Correo no existe', HttpStatus.NOT_FOUND);
-
-  //   delete resultado.contrasenia;
-  //   return resultado;
-  // }
-
-  // // BORRADO LOGICO -------------------------------------------------------------------------
-  // async remove(id: number, existe: boolean) {
-  //   const usuarioExiste = await this.usuarioRepository.findOne({
-  //     where: { id },
-  //   });
-  //   if (!usuarioExiste)
-  //     return new HttpException('ID no existe', HttpStatus.NOT_FOUND);
-
-  //   usuarioExiste.existe = !existe;
-  //   await this.usuarioRepository.save(usuarioExiste);
-  //   return HttpStatus.OK;
-  // }
-
-  // // BLOQUEAR USUARIO -----------------------------------------------------------------------
-  // // activo/noactivo
-  // async bloquearUsuario(id: number, activo: boolean) {
-  //   const buscarUsuario = await this.usuarioRepository.findOne({
-  //     where: { id },
-  //   });
-  //   if (!buscarUsuario)
-  //     return new HttpException('ID no existe', HttpStatus.BAD_REQUEST);
-
-  //   buscarUsuario.activo = !activo;
-  //   await this.usuarioRepository.save(buscarUsuario);
-  //   return HttpStatus.OK;
-  // }
 }
