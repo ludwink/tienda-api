@@ -53,26 +53,4 @@ export class UsuariosController {
   ) {
     return this.usuariosService.modifyActiveOrExists(id, modificarUsuario);
   }
-
-  // @Get('/usuario/:usuario')
-  // findByUsername(@Param('usuario') usuario: string) {
-  //   return this.usuariosService.findByUsername(usuario);
-  // }
-
-  // @Get('/correo/:correo')
-  // findByEmail(@Param('correo') correo: string) {
-  //   return this.usuariosService.findByEmail(correo);
-  // }
-
-  // // borrrar --------------------------------------------------------------------------------
-  // @Patch('/borrar/:id')
-  // remove(@Param('id', ParseIntPipe) id, @Body() existe: boolean) {
-  //   return this.usuariosService.remove(id, existe);
-  // }
-
-  // // bloquear --------------------------------------------------------------------------------
-  // @Patch('/bloquear/:id')
-  // bloquear(@Param('id', ParseIntPipe) id, @Body() activo: boolean) {
-  //   return this.usuariosService.bloquearUsuario(id, activo);
-  // }
 }

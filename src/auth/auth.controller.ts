@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -18,9 +25,11 @@ export class AuthController {
     return this.authService.register(nuevoUsuario);
   }
 
+  // RUTA PROTEGIRA CON GUARD -------------------------------------------------
   @UseGuards(AuthGuard)
   @Get('usuarios')
-  usuarios() {
-    return 'Aqui muestra todos los usuarios';
+  usuarios(@Request() request) {
+    return request.usuario;
+    //return `Aqui muestra todos los usuarios`;
   }
 }
